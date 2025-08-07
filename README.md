@@ -4,7 +4,7 @@ training and fine-tuning code MuFun model proposed in [Advancing the Foundation 
 
 detailed instructions and examples will be added soon.
 
-Our main training code is adapted from TinyLLaVA Factory to support audio input, as for reinforcement learning, we modify the HuggingFace TRL library.
+Our main training code is adapted from [TinyLLaVA Factory](https://github.com/TinyLLaVA/TinyLLaVA_Factory) to support audio input, as for reinforcement learning, we modify the HuggingFace TRL library.
 
 ## Inference Code
 
