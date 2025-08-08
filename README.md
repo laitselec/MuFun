@@ -1,10 +1,14 @@
 # MuFun
+<div align="center">
+    <a href="https://arxiv.org/abs/2508.01178"><img src="https://img.shields.io/badge/arXiv-2508.01178-b31b1b" alt="version"></a>
+    <a href="https://huggingface.co/collections/Yi3852/mufun-68943d4ad905f4e23e35b86d"><img src="https://img.shields.io/badge/HuggingFace-Collections-ffc107" alt="version"></a>
+</div>
 
-training and fine-tuning code MuFun model proposed in [Advancing the Foundation Model for Music Understanding](https://arxiv.org/abs/2508.01178)
+training and fine-tuning code for the MuFun model proposed in [Advancing the Foundation Model for Music Understanding](https://arxiv.org/abs/2508.01178)
 
-detailed instructions and examples will be added soon.
+detailed instructions and examples will be added soon
 
-Our main training code is adapted from [TinyLLaVA Factory](https://github.com/TinyLLaVA/TinyLLaVA_Factory) to support audio input, as for reinforcement learning, we modify the HuggingFace TRL library.
+Our main training code is adapted from [TinyLLaVA Factory](https://github.com/TinyLLaVA/TinyLLaVA_Factory) to support audio input, as for reinforcement learning we modify the HuggingFace TRL library.
 
 ## Inference Code
 
