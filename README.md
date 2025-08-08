@@ -8,6 +8,10 @@
           🤗 <a href="https://huggingface.co/collections/Yi3852/mufun-68943d4ad905f4e23e35b86d">Hugging Face</a>&nbsp&nbsp | &nbsp&nbsp🤖 <a href="https://huggingface.co/datasets/Yi3852/MuCUE">DataSets</a>&nbsp&nbsp | &nbsp&nbsp 📑 <a href="https://arxiv.org/abs/2508.01178">Paper</a> &nbsp&nbsp | &nbsp&nbsp💜 <a href="https://rickey-cs.github.io/MuCUE-Bench/"><b>BenchMark</b></a>&nbsp&nbsp
 <br>
 
+<p align="center">
+    <img src="./MuFun.png" width="800" />
+<p>
+
 training and fine-tuning code for the MuFun model proposed in [Advancing the Foundation Model for Music Understanding](https://arxiv.org/abs/2508.01178)
 
 detailed instructions and examples will be added soon
