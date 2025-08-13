@@ -128,7 +128,6 @@ def train():
 
         return [1.0 - calculate_wer(label, completion) for completion, label in zip(completions, gt)]
 
-    # training_args = GRPOConfig(output_dir="tlf-GRPO1", logging_steps=1, deepspeed='./scripts/z3.json', gradient_checkpointing=True, bf16=True)
     training_args = GRPOConfig()
     for k, v in training_arguments.__dict__.items():
         if k in training_args.__dict__:
@@ -140,9 +139,13 @@ def train():
     # training_args.steps_per_generations = training_args.gradient_accumulation_steps
     # training_args.max_completion_length = 256
     # training_args.temperature = 0.8
+    
     # training_args.beta = 0.005
-    # ref_model_name = training_arguments.pretrained_model_path
-    # ref_model = TinyLlavaForConditionalGeneration.from_pretrained(ref_model_name,low_cpu_mem_usage=True)
+    ref_model = None
+    if training_args.beta != 0.0:
+        ref_model_name = training_arguments.pretrained_model_path
+        ref_model = TinyLlavaForConditionalGeneration.from_pretrained(ref_model_name,low_cpu_mem_usage=True)
+    
     # training_args.ds3_gather_for_generation = False
     # print(f"Training arguments: {training_args}")
     
@@ -151,7 +154,7 @@ def train():
     reward_funcs=reward_gt,
     args=training_args,
     **data_module,
-    # ref_model=ref_model,
+    ref_model=ref_model,
     # train_dataset=dataset,
 )
     

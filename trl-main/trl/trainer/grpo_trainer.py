@@ -1005,13 +1005,13 @@ class GRPOTrainer(Trainer):
         image_sizes = inputs.get("image_sizes", None)
         def dict_of_lists_to_list_of_dicts(data: dict[str, list[Any]]) -> list[dict[str, Any]]:
             if not data:
-                return []  # 如果字典为空，返回空列表
+                return []  
             keys = data.keys()
             values = data.values()
             lengths = {len(lst) for lst in values}
             if len(lengths) > 1:
                 print(data)
-                raise ValueError("所有键对应的列表长度必须相同")
+                raise ValueError("The lengths of the lists corresponding to all keys must be the same")
             result = [dict(zip(keys, row)) for row in zip(*values)]
             return result
         if 'images' in inputs:

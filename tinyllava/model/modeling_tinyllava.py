@@ -52,9 +52,9 @@ class TinyLlavaPreTrainedModel(PreTrainedModel):
             if module.padding_idx is not None:
                 module.weight.data[module.padding_idx].zero_()
 
-    @property
-    def _supports_sdpa(self):
-        return self.language_model._supports_sdpa
+    # @property
+    # def _supports_sdpa(self):
+    #     return self.language_model._supports_sdpa
 
 
 class TinyLlavaForConditionalGeneration(TinyLlavaPreTrainedModel, GenerationMixin):

@@ -1,19 +1,19 @@
 import os
 
-from PIL import Image, ImageFile
+# from PIL import Image, ImageFile
 import torch
 import ast
 
 from ..utils.data_utils import *
 
-ImageFile.LOAD_TRUNCATED_IMAGES = True
+# ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 import warnings
 warnings.filterwarnings('ignore')
 import requests
 from io import BytesIO
 from transformers.pipelines.audio_utils import ffmpeg_read
-import librosa
+# import librosa
 import mutagen
 from torchaudio import functional as taF
 import numpy as np

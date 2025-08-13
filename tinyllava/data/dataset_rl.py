@@ -59,8 +59,9 @@ class LazyRLDataset(Dataset):
         data_dict = self.text_preprocess(copy.deepcopy(sources["conversations"]), mode='rl')
         # data_dict['image'] = []
         image_size = []
-        # if 'image' in sources:
         image_files = sources['image'] if 'image' in sources else []
+        if 'audio' in sources:
+            image_files = sources['audio']
         segs = sources['time'] if 'time' in sources else None
         
         image_list, image_size = load_audio(self.image_preprocess,image_files,segs,self.data_args.image_folder)

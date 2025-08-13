@@ -4,8 +4,9 @@ from .base import VisionTower
 from transformers import AutoProcessor
 import os
 from torch import nn
+from transformers import WhisperForConditionalGeneration
 
-@register_vision_tower('wpm')      
+@register_vision_tower('whisper')      
 class WpmAudioTower(VisionTower):
     def __init__(self, cfg):
         super().__init__(cfg)

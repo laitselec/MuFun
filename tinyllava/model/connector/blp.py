@@ -38,7 +38,7 @@ class CNet(nn.Module):
     
     
 @register_connector('blp')    
-class SLPConnector(Connector):
+class MLPConnector(Connector):
     def __init__(self, config):
         super().__init__()
         

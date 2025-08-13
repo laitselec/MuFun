@@ -1,4 +1,5 @@
 # MuFun
+
 <div align="center">
     <a href="https://arxiv.org/abs/2508.01178"><img src="https://img.shields.io/badge/arXiv-2508.01178-b31b1b" alt="version"></a>
     <a href="https://huggingface.co/collections/Yi3852/mufun-68943d4ad905f4e23e35b86d"><img src="https://img.shields.io/badge/HuggingFace-Collections-ffc107" alt="version"></a>
@@ -17,6 +18,17 @@ training and fine-tuning code for the MuFun model proposed in [Advancing the Fou
 detailed instructions and examples will be added soon
 
 Our main training code is adapted from [TinyLLaVA Factory](https://github.com/TinyLLaVA/TinyLLaVA_Factory) to support audio input, as for reinforcement learning we modify the HuggingFace TRL library.
+
+## Contents
+
+[Inference Code](#inference-code)
+[Installation](#installation)
+[Data Preparation](#data-preparation)
+[Finetuning](#finetuning)
+[Train from Scratch](#train-from-scratch)
+[Reinforcement Learning](#reinforcement-learning)
+[Custom Model Architecture](#custom-model-architecture)
+[Citation](#citation)
 
 ## Inference Code
 
@@ -53,6 +65,82 @@ print(res)
 
 # set audio_files=None will work, however it is not recommended to use it as a text model
 ```
+
+## Installation
+
+```bash
+git clone https://github.com/laitselec/MuFun.git
+cd MuFun
+
+conda create -n mufun python=3.10 -y
+conda activate mufun
+pip install --upgrade pip
+
+pip install -e .
+pip install flash-attn==2.7.4.post1 --no-build-isolation # optional, otherwise change --attn_implementation to sdpa in train scripts
+```
+
+## Data Preparation
+
+see `data_preparation_example.ipynb`
+dataset is in stored a json file, and the format for each sample is like this:
+
+```json
+{
+    "id": "LCeUo2tfY4LFpc5r3jiZid",
+    "audio": "~/gtzan/genres/blues/blues.00000.wav",
+    "conversations": [
+        {
+            "from": "human",
+            "value": "<audio>\nWhat category of music does this track fall under? (choose the genre from: blues, classical, country, disco, hiphop, jazz, metal, pop, reggae, and rock.)"
+        },
+        {
+            "from": "gpt",
+            "value": "blues"
+        }
+    ]
+},
+```
+
+## Finetuning
+
+after modifying paramters like data path in `scripts/finetune.sh`, run:
+
+```bash
+sh scripts/finetune.sh
+```
+
+## Train from Scratch
+
+modify paramters in `scripts/train_scratch.sh`, `scripts/warmup_qwen.sh` and `scripts/trainfull_qwen.sh`
+
+```bash
+# this will strat the warmup training where --tune_type_llm and tune_type_vision_tower are set to frozen 
+sh scripts/train_scratch.sh
+
+# after above is done, modify pretrained_model_path(checkpoint-xxx) in trainfull_qwen.sh to what you get
+# then in train_scratch.sh comment the bash scripts/warmup_qwen.sh line and uncomment the bash scripts/trainfull_qwen.sh line
+# this will start full training where parameters of all modules are tuned
+sh scripts/train_scratch.sh
+```
+
+## Reinforcement Learning
+
+currently we support GRPO, for more details see `tinyllava/train/train_grpo.py` and `trl-main/trl/trainer/grpo_trainer.py`
+
+```bash
+# install our modified trl library first
+cd trl-main/
+conda install -c conda-forge pyarrow
+pip install .
+cd ..
+
+sh scripts/grpo.sh
+```
+
+## Custom Model Architecture
+
+our framework is suitable for training general llava-kind audio language models, if you want to use other type of llm, audio tower or connector, go to `tinyllava/model`, `tinyllava/data/template` and add or modify the code accordingly
 
 ## Citation
 

@@ -96,7 +96,7 @@ def train():
                            args=training_arguments,
                            **data_module)
     
-    if has_checkpoint_folders_pathlib_any(training_arguments.output_dir):
+    if has_checkpoint_folders_pathlib_any(training_arguments.output_dir) and 'pretrain' not in training_arguments.pretrained_model_path:
         print(f"Found checkpoint folders in {training_arguments.output_dir}, resuming training...")
         trainer.train(resume_from_checkpoint=True)
     else:

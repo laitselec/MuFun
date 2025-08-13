@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mufun"
+version = "1.0.0"
+description = "mufun model train code"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+]
+dependencies = [
+    "torch", "torchvision", "tiktoken", "openpyxl", "tensorboardX",
+    "transformers==4.51.3", "tokenizers", "sentencepiece", "shortuuid",
+    "accelerate", "bitsandbytes", "peft",
+    "pydantic<2,>=1", "markdown2[all]", "numpy", "scikit-learn",
+    "gradio", "gradio_client",
+    "requests", "httpx", "uvicorn", "fastapi",
+    "einops", "einops-exts", "timm",
+    "deepspeed", "ninja", "wandb",
+    "mutagen", "torchaudio", "librosa", "liger-kernel"
+]
+
+
+[project.urls]
+"Homepage" = "https://github.com/laitselec/MuFun"
+"Bug Tracker" = "https://github.com/laitselec/MuFun/issues"
+
+[tool.setuptools.packages.find]
+exclude = ["assets*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "tests*"]
+
+[tool.wheel]
+exclude = ["assets*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "tests*"]
+

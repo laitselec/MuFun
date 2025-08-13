@@ -136,7 +136,8 @@ class BaseTrainingRecipe:
 
     def load(self, model, model_args={}):
         if not ('lora' in self.training_arguments.pretrained_model_path and os.path.exists(os.path.join(self.training_arguments.pretrained_model_path, 'adapter_config.json'))): # loading model for non-lora/non-qlora pretraining
-            if os.path.exists(os.path.join(self.training_arguments.pretrained_model_path, 'ft')):
+            ppath = self.training_arguments.pretrained_model_path
+            if 'Yi3852/MuFun' in ppath or 'checkpoint-' in ppath or os.path.exists(os.path.join(ppath, 'ft')):
                 model, tokenizer, image_processor, context_len = load_pretrained_model(model_name_or_path=self.training_arguments.pretrained_model_path)
             else:    
                 model.load_llm(**model_args['llm'])
