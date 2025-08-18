@@ -9,25 +9,25 @@ import threading
 
 from transformers import BitsAndBytesConfig, AutoTokenizer, AutoModelForCausalLM
 
-# 我们创建一个类来处理模型的加载、卸载和状态管理
+# We create a class to handle model loading, unloading, and state management
 
 class ModelManager:
     def __init__(self, hf_path, unload_timeout=300):
         """
-        初始化模型管理器。
-        :param hf_path: Hugging Face 模型路径。
-        :param unload_timeout: 无活动多少秒后卸载模型（秒）。
+        Initializes the model manager.
+        :param hf_path: The Hugging Face model path.
+        :param unload_timeout: The timeout in seconds to unload the model after no activity.
         """
         self.hf_path = hf_path
         self.unload_timeout = unload_timeout
         self.model = None
         self.tokenizer = None
-        self.model_lock = threading.Lock()  # 线程锁，防止并发加载/卸载冲突
+        self.model_lock = threading.Lock()  # Thread lock to prevent concurrent loading/unloading conflicts
         self.unload_timer = None
         print("ModelManager initialized. Model will be loaded on first request.")
 
     def _load_model(self):
-        """内部方法：加载模型和分词器到显存"""
+        """Internal method: loads the model and tokenizer into VRAM"""
         if self.model is None:
             print("Loading model into VRAM...")
             start_time = time.time()
@@ -54,8 +54,8 @@ class ModelManager:
 
 
     def _unload_model(self):
-        """内部方法：从显存卸载模型"""
-        # 加锁确保在卸载时没有其他线程在访问模型
+        """Internal method: unloads the model from VRAM"""
+        # Acquire a lock to ensure no other threads are accessing the model during unload
         with self.model_lock:
             if self.model is not None:
                 print("Unloading model from VRAM...")
@@ -64,29 +64,29 @@ class ModelManager:
                 del self.tokenizer
                 self.model = None
                 self.tokenizer = None
-                gc.collect()  # 垃圾回收
-                torch.cuda.empty_cache()  # 清空PyTorch的CUDA缓存
+                gc.collect()  # Garbage collection
+                torch.cuda.empty_cache()  # Clear PyTorch's CUDA cache
                 end_time = time.time()
                 print(f"Model unloaded successfully in {end_time - start_time:.2f} seconds.")
-            # 确保定时器被清理
+            # Ensure the timer is cleared
             self.unload_timer = None
 
     def get_model(self):
         """
-        获取模型和分词器。这是外部调用的主要接口。
-        它会处理模型的加载和卸载定时。
+        Gets the model and tokenizer. This is the main interface for external calls.
+        It handles the model loading and unloading schedule.
         """
         with self.model_lock:
-            # 如果有正在等待的卸载任务，取消它，因为我们收到了新请求
+            # If there is a pending unload task, cancel it because we have received a new request
             if self.unload_timer:
                 self.unload_timer.cancel()
                 print("New request received. Canceled a pending model unload.")
 
-            # 如果模型未加载，则加载它
+            # If the model is not loaded, load it
             if self.model is None:
                 self._load_model()
 
-            # (重新)设置卸载定时器
+            # (Re)set the unload timer
             print(f"Scheduling model unload in {self.unload_timeout} seconds.")
             self.unload_timer = threading.Timer(self.unload_timeout, self._unload_model)
             self.unload_timer.start()
@@ -94,7 +94,7 @@ class ModelManager:
             return self.model, self.tokenizer
 
 hf_path = 'Yi3852/MuFun-ACEStep'
-# 设置超时时间为 300 秒（5分钟）
+# Set the timeout to 300 seconds (5 minutes)
 model_manager = ModelManager(hf_path, unload_timeout=300)
 
 inp = '<audio>\nDeconstruct this song, listing its tags and lyrics. Directly output a JSON object with prompt and lyrics fields, without any additional explanations or text.'
@@ -113,16 +113,16 @@ def generate_music_data(audio_filepath):
 
     print(f"Received request for audio file: {audio_filepath}")
     
-    # 从管理器获取模型，这步会自动处理加载和定时卸载
+    # Get the model from the manager; this step automatically handles loading and scheduled unloading
     model, tokenizer = model_manager.get_model()
     
-    # 检查模型是否成功加载
+    # Check if the model was loaded successfully
     if model is None or tokenizer is None:
         error_msg = "Model could not be loaded. Please check the logs."
         return error_msg, error_msg
         
     try:
-        # 使用获取到的模型进行推理
+        # Use the obtained model for inference
         res = model.chat(prompt=inp, audio_files=audio_filepath, segs=None, tokenizer=tokenizer, temperature=0.2)
         print(f"Model response: {res}")
         json_output = json.loads(res)
