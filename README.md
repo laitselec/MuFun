@@ -15,7 +15,10 @@
 
 training and fine-tuning code for the MuFun model proposed in [Advancing the Foundation Model for Music Understanding](https://arxiv.org/abs/2508.01178)
 
-Our main training code is adapted from [TinyLLaVA Factory](https://github.com/TinyLLaVA/TinyLLaVA_Factory) to support audio input, as for reinforcement learning we modify the HuggingFace TRL library.
+Models released are [MuFun-Base](https://huggingface.co/Yi3852/MuFun-Base) and several finetunes [MuFun-Instruct](https://huggingface.co/Yi3852/MuFun-Instruct),  [MuFun-ACEStep](https://huggingface.co/Yi3852/MuFun-ACEStep),  [MuFun-ABC](https://huggingface.co/Yi3852/MuFun-ABC)
+
+Our main training code is adapted from [TinyLLaVA Factory](https://github.com/TinyLLaVA/TinyLLaVA_Factory) to support audio input, as for reinforcement learning we modify the HuggingFace [TRL](https://github.com/huggingface/trl) library.
+Data processing scripts for open datasets will be uploaded recently.
 
 ## Contents
 
@@ -32,9 +35,11 @@ Our main training code is adapted from [TinyLLaVA Factory](https://github.com/Ti
 
 for inference it's not necessary to install this repo, only some audio processing packages like mutagen, torchaudio are needed
 
+(currently supported audio formats:  '.wav', '.mp3', '.flac', '.opus', '.ogg')
+
 ```python
 from transformers import AutoTokenizer, AutoModelForCausalLM
-hf_path = 'Yi3852/MuFun-Instruct' # or 'Yi3852/MuFun-Base'
+hf_path = 'Yi3852/MuFun-Instruct' # or 'Yi3852/MuFun-Base' 'Yi3852/MuFun-ACEStep' 'Yi3852/MuFun-ABC'
 tokenizer = AutoTokenizer.from_pretrained(hf_path, use_fast=False)
 device='cuda'
 model = AutoModelForCausalLM.from_pretrained(hf_path, trust_remote_code=True, torch_dtype="bfloat16")
