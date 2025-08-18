@@ -9,6 +9,12 @@
           🤗 <a href="https://huggingface.co/collections/Yi3852/mufun-68943d4ad905f4e23e35b86d">Models</a>&nbsp&nbsp | &nbsp&nbsp🤗 <a href="https://huggingface.co/datasets/Yi3852/MuCUE">Eval Data</a>&nbsp&nbsp | &nbsp&nbsp 📑 <a href="https://arxiv.org/abs/2508.01178">Paper</a> &nbsp&nbsp | &nbsp&nbsp💜 <a href="https://rickey-cs.github.io/MuCUE-Bench/"><b>BenchMark</b></a>&nbsp&nbsp
 <br>
 
+<div align="center">
+Yi Jiang<sup>1</sup>, Wei Wang<sup>2</sup>, Xianwen Guo<sup>2</sup>, Huiyun Liu<sup>2</sup>, Hanrui Wang<sup>2</sup>, Youri Xu<sup>2</sup>, Haoqi Gu<sup>2</sup>, Zhongqian Xie<sup>2</sup>, Chuanjiang Luo<sup>2</sup>
+    
+<sup>1</sup>Zhejiang University      <sup>2</sup>NetEase Cloud Music
+</div>
+
 <p align="center">
     <img src="./MuFun.png" width="800" />
 <p>
