@@ -10,8 +10,10 @@
 <br>
 
 <div align="center">
-Yi Jiang<sup>1</sup>, Wei Wang<sup>2</sup>, Xianwen Guo<sup>2</sup>, Huiyun Liu<sup>2</sup>, Hanrui Wang<sup>2</sup>, Youri Xu<sup>2</sup>, Haoqi Gu<sup>2</sup>, Zhongqian Xie<sup>2</sup>, Chuanjiang Luo<sup>2</sup>
-    
+Yi Jiang<sup>1</sup>, Wei Wang<sup>2</sup>, Xianwen Guo<sup>2</sup>, Huiyun Liu<sup>2</sup>, Hanrui Wang<sup>2</sup>, 
+
+Youri Xu<sup>2</sup>, Haoqi Gu<sup>2</sup>, Zhongqian Xie<sup>2</sup>, Chuanjiang Luo<sup>2</sup>
+
 <sup>1</sup>Zhejiang University      <sup>2</sup>NetEase Cloud Music
 </div>
 
