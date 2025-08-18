@@ -68,6 +68,4 @@ adata
 checkpoints
 wandb
 *.bin
-*.wav
-*.mp3
 .gradio
