@@ -25,6 +25,8 @@ training and fine-tuning code for the MuFun model proposed in [Advancing the Fou
 
 Models released are [MuFun-Base](https://huggingface.co/Yi3852/MuFun-Base) and several finetunes [MuFun-Instruct](https://huggingface.co/Yi3852/MuFun-Instruct),  [MuFun-ACEStep](https://huggingface.co/Yi3852/MuFun-ACEStep),  [MuFun-ABC](https://huggingface.co/Yi3852/MuFun-ABC)
 
+(we have a demo for MuFun-ACEStep at http://47.121.209.64/mufun_demo_acestep)
+
 Our main training code is adapted from [TinyLLaVA Factory](https://github.com/TinyLLaVA/TinyLLaVA_Factory) to support audio input, as for reinforcement learning we modify the HuggingFace [TRL](https://github.com/huggingface/trl) library.
 Data processing scripts for open datasets will be uploaded recently.
 
