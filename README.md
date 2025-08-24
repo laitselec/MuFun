@@ -30,6 +30,7 @@ Models released are [MuFun-Base](https://huggingface.co/Yi3852/MuFun-Base) and s
 Our main training code is adapted from [TinyLLaVA Factory](https://github.com/TinyLLaVA/TinyLLaVA_Factory) to support audio input, as for reinforcement learning we modify the HuggingFace [TRL](https://github.com/huggingface/trl) library.
 Data processing scripts for open datasets will be uploaded recently.
 
+for doc and code analysis https://deepwiki.com/laitselec/MuFun is good
 ## Contents
 
 - [Inference Code](#inference-code)
@@ -46,6 +47,10 @@ Data processing scripts for open datasets will be uploaded recently.
 for inference it's not necessary to install this repo, only some audio processing packages like mutagen, torchaudio are needed
 
 (currently supported audio formats:  '.wav', '.mp3', '.flac', '.opus', '.ogg')
+
+This series of models has approximately 9B parameters. If you load the model for inference at its native BF16 precision, 24GB of VRAM will be sufficient for songs up to 5 minutes long. (VRAM consumption increases with audio duration, as 1 second of audio corresponds to roughly 10 tokens. For instance, a 3-minute song will occupy 1800 tokens in the model's context window.)
+
+As for quantization, there is no separate pre-quantized version available at the moment. However, you can use the `bitsandbytes` library to quantize the model to 4-bit or 8-bit on the fly during loading. The quality loss at 4-bit is acceptable, and with this approach, 12GB of VRAM should be enough for songs of typical length.
 
 ```python
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -77,6 +82,25 @@ res=model.chat(prompt=inp, audio_files=aud, segs=[0,30.0], tokenizer=tokenizer)
 print(res)
 
 # set audio_files=None will work, however it is not recommended to use it as a text model
+```
+
+quantization using [bitsandbytes](https://huggingface.co/docs/transformers/quantization/bitsandbytes):
+```python
+from transformers import BitsAndBytesConfig
+from transformers import AutoTokenizer, AutoModelForCausalLM
+hf_path = 'Yi3852/MuFun-Instruct' # or 'Yi3852/MuFun-Base' 'Yi3852/MuFun-ACEStep' 'Yi3852/MuFun-ABC'
+tokenizer = AutoTokenizer.from_pretrained(hf_path, use_fast=False)
+quantization_config = BitsAndBytesConfig(
+    load_in_4bit=True,  # or load_in_8bit=True for 8-bit quantization
+    llm_int8_skip_modules=["lm_head", 'vision_tower', 'connector']
+)
+model = AutoModelForCausalLM.from_pretrained(
+    hf_path,
+    trust_remote_code=True,
+    torch_dtype="bfloat16",
+    device_map="auto",
+    quantization_config=quantization_config
+)
 ```
 
 ## Installation
