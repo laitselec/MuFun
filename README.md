@@ -148,6 +148,18 @@ after modifying paramters like data path in `scripts/finetune.sh`, run:
 ```bash
 sh scripts/finetune.sh
 ```
+Training Script Parameter(many of these parameters are inherited from `transformers.TrainingArguments`)
+| Parameter Name                                                                         	| Description                                                                                             	|
+|----------------------------------------------------------------------------------------	|---------------------------------------------------------------------------------------------------------	|
+| deepspeed                                                                              	| DeepSpeed configuration file                                                                            	|
+| data_path                                                                              	| Path to the training data JSON file                                                                     	|
+| eval_data_path                                                                         	| Path to the evaluation data JSON file; the `eval_steps` parameter determines the evaluation interval    	|
+| pretrained_model_path                                                                  	| Path to the initial model weights                                                                       	|
+| per_device_train_batch_size,  per_device_eval_batch_size,   gradient_accumulation_steps  	| Adjust based on available GPU memory                                                                    	|
+| tune_type_llm,  tune_type_vision_tower, tune_type_connector                              	| Typically `full` or `frozen`; determines whether the component is trained or frozen                       	|
+| learning_rate,  warmup_ratio,  lr_scheduler_type                                         	| Learning rate related parameters                                                                        	|
+| save_steps,  save_total_limit,  output_dir                                               	| Checkpoint saving parameters                                                                            	|
+
 
 ## Train from Scratch
 
