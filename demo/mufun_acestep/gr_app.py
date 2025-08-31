@@ -140,7 +140,8 @@ with gr.Blocks(theme=gr.themes.Soft()) as demo:
         """
         # 🎵 Music to Prompt & Lyrics Generator
         Upload a song or select an example below. The model will analyze the audio 
-        and generate a descriptive prompt and the corresponding lyrics.
+        and generate a descriptive prompt and the corresponding lyrics. (currently supported audio formats: '.wav', '.mp3', '.flac', '.opus', '.ogg')
+        Model weights: [Yi3852/MuFun-ACEStep](https://huggingface.co/Yi3852/MuFun-ACEStep)
         **Note:** The model will be automatically loaded on the first request and unloaded after 5 minutes of inactivity to save VRAM.
         """
     )
